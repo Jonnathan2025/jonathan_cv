@@ -4,7 +4,7 @@
 Este proyecto es una versión digital de mi currículum, desarrollada con HTML5, CSS3 y Bootstrap, basada en un diseño original hecho en Figma.
 
 ## 🎨 Enlace a Figma
-[Ver prototipo en Figma](https://www.figma.com/file/...) <!-- Usa tu enlace real -->
+https://www.figma.com/design/uGjZoSrhoSvWHCEUrhlyiG/Laboratorio-7-Jonnathan-Castillo?node-id=0-1&t=UZkPjbAsSbGqcju8-1
 
 ## 🚀 Enlaces del proyecto
 
