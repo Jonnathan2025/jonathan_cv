@@ -3,256 +3,919 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jonnathan Castillo - Portafolio Digital</title>
+    <title>Jonnathan Castillo - Portafolio Digital Accesible</title>
+    <meta name="description" content="Portafolio digital de Jonnathan Castillo, Tecnólogo en Software y estudiante de Ingeniería en Software especializado en desarrollo web y aplicaciones.">
+    <meta name="keywords" content="Jonnathan Castillo, Software, Desarrollador, JavaScript, C#, Python, Laravel, Portafolio">
+    <meta name="author" content="Jonnathan Castillo">
     
     <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
+    <!-- Eye Tracking Libraries -->
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
+    
     <!-- Custom CSS -->
-    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        /* Estilos originales del portafolio */
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            overflow-x: hidden;
+        }
+
+        /* Controles de accesibilidad */
+        .accessibility-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1001;
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .font-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .font-control-btn, .high-contrast-toggle {
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .font-control-btn:hover, .high-contrast-toggle:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* CONTROLES DE EYE TRACKING */
+        .eye-tracking-controls {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1002;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .eye-tracking-controls h4 {
+            color: white;
+            font-size: 14px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .eye-tracking-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .eye-tracking-btn.start {
+            background: #28a745;
+            color: white;
+        }
+
+        .eye-tracking-btn.stop {
+            background: #dc3545;
+            color: white;
+        }
+
+        .eye-tracking-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .eye-tracking-status {
+            color: white;
+            font-size: 11px;
+            text-align: center;
+            padding: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+
+        /* HEATMAP CONTAINER */
+        #heatmapContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        /* Skip link para accesibilidad */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 1003;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--gradient-primary) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+        }
+
+        .nav-link {
+            font-weight: 500 !important;
+            transition: color 0.3s ease !important;
+        }
+
+        .nav-link:hover {
+            color: #ffd700 !important;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 120px 0 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            border: 2px solid white;
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-outline-custom:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .profile-img {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeInRight 1s ease-out 0.6s both;
+            max-width: 400px;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            background: var(--light-color);
+        }
+
+        .skill-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+            width: 0;
+        }
+
+        /* Projects Section */
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .project-image i {
+            font-size: 4rem;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--light-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--light-color);
+        }
+
+        .contact-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .contact-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .eye-tracking-controls {
+                position: relative;
+                margin-bottom: 20px;
+            }
+            
+            .accessibility-controls {
+                position: relative;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Tamaños de fuente para accesibilidad */
+        .font-small {
+            font-size: 14px;
+        }
+
+        .font-large {
+            font-size: 18px;
+        }
+
+        .font-large .hero-title {
+            font-size: 4rem;
+        }
+
+        .font-large .section-title {
+            font-size: 3rem;
+        }
+
+        /* Alto contraste */
+        .high-contrast {
+            filter: contrast(150%) brightness(1.2);
+        }
+
+        .high-contrast .navbar {
+            background: #000000 !important;
+        }
+
+        .high-contrast .hero-section {
+            background: #000000 !important;
+        }
+    </style>
 </head>
 <body>
+    <!-- Skip to content link para accesibilidad -->
+    <a href="#main-content" class="skip-link" aria-label="Saltar al contenido principal">
+        Saltar al contenido principal
+    </a>
+
+    <!-- CONTROLES DE EYE TRACKING -->
+    <div class="eye-tracking-controls" aria-label="Controles de seguimiento ocular">
+        <h4>👁️ Eye Tracking</h4>
+        <button class="eye-tracking-btn start" id="startEyeBtn">
+            🚀 Iniciar Seguimiento
+        </button>
+        <button class="eye-tracking-btn stop" id="stopEyeBtn" disabled>
+            ⏹️ Ver Mapa de Calor
+        </button>
+        <div class="eye-tracking-status" id="eyeStatus">
+            Listo para iniciar
+        </div>
+    </div>
+
+    <!-- Controles de accesibilidad -->
+    <div class="accessibility-controls" aria-label="Controles de accesibilidad">
+        <div class="font-controls" role="group" aria-labelledby="font-controls-title">
+            <h3 id="font-controls-title" class="visually-hidden">Controles de tamaño de fuente</h3>
+            <button class="font-control-btn" onclick="changeFontSize('small')" 
+                    aria-label="Disminuir tamaño de fuente" title="Texto pequeño">A-</button>
+            <button class="font-control-btn" onclick="changeFontSize('normal')" 
+                    aria-label="Tamaño de fuente normal" title="Texto normal">A</button>
+            <button class="font-control-btn" onclick="changeFontSize('large')" 
+                    aria-label="Aumentar tamaño de fuente" title="Texto grande">A+</button>
+        </div>
+        <button class="high-contrast-toggle" onclick="toggleHighContrast()" 
+                aria-label="Alternar modo alto contraste" title="Alto contraste">
+            <i class="fas fa-adjust" aria-hidden="true"></i>
+            <span class="visually-hidden">Modo alto contraste</span>
+        </button>
+    </div>
+
+    <!-- HEATMAP CONTAINER -->
+    <div id="heatmapContainer"></div>
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavbar">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#home">Jonnathan Castillo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Sobre Mí</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#skills">Habilidades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#projects">Proyectos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contacto</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 text-center text-lg-start hero-content">
-                    <h1 class="hero-title">Jonnathan Castillo</h1>
-                    <p class="hero-subtitle">Estudiante de Ingeniería en Software & Tecnólogo en Software</p>
-                    <p class="hero-description">
-                        Mi objetivo profesional es aprender y desarrollar habilidades técnicas y de programación 
-                        para contribuir en el mantenimiento de sistemas y aplicaciones dentro de una empresa. 
-                        Esto incluye el desarrollo de sitios web, aplicaciones móviles y sistemas de base de datos.
-                    </p>
-                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
-                        <a href="#contact" class="btn btn-primary-custom">Contáctame</a>
-                        <a href="#projects" class="btn btn-outline-custom">Ver Proyectos</a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center mt-5 mt-lg-0">
-                   <img src="images/img.jpg" alt="Foto de Jonnathan Castillo" class="img-fluid rounded-circle" style="max-width: 250px;">
-                    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNavbar" 
+             role="navigation" aria-label="Navegación principal">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#home" aria-label="Jonnathan Castillo - Ir al inicio">
+                    Jonnathan Castillo
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" 
+                        aria-expanded="false" aria-label="Abrir menú de navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto" role="menubar">
+                        <li class="nav-item" role="none">
+                            <a class="nav-link" href="#home" role="menuitem" 
+                               aria-label="Ir a la sección de inicio">Inicio</a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a class="nav-link" href="#about" role="menuitem" 
+                               aria-label="Ir a la sección sobre mí">Sobre Mí</a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a class="nav-link" href="#skills" role="menuitem" 
+                               aria-label="Ir a la sección de habilidades">Habilidades</a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a class="nav-link" href="#projects" role="menuitem" 
+                               aria-label="Ir a la sección de proyectos">Proyectos</a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a class="nav-link" href="#contact" role="menuitem" 
+                               aria-label="Ir a la sección de contacto">Contacto</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </section>
+        </nav>
+    </header>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title fade-in">Sobre Mí</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center fade-in">
-                        <p class="lead mb-4">
-                            Soy Tecnólogo en Software y estudiante de Ingeniería en Software (7mo semestre) con experiencia en soporte técnico, 
-                            mantenimiento de sistemas y desarrollo de aplicaciones. Mi formación incluye estudios 
-                            en el Instituto Tecnológico Superior Cordillera y actualmente en la Universidad Internacional SEK.
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero-section" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 text-center text-lg-start hero-content">
+                        <h1 id="hero-title" class="hero-title">Jonnathan Castillo</h1>
+                        <p class="hero-subtitle" role="doc-subtitle">
+                            Estudiante de Ingeniería en Software & Tecnólogo en Software
                         </p>
-                        <p class="mb-4">
-                            He trabajado en el área de salud pública y gestión inmobiliaria del sector público, 
-                            donde he desarrollado habilidades en registro y control de datos, gestión de expedientes, 
-                            y soporte técnico especializado en sistemas y aplicaciones.
+                        <p class="hero-description">
+                            Mi objetivo profesional es aprender y desarrollar habilidades técnicas y de programación 
+                            para contribuir en el mantenimiento de sistemas y aplicaciones dentro de una empresa. 
+                            Esto incluye el desarrollo de sitios web, aplicaciones móviles y sistemas de base de datos.
                         </p>
-                        <p>
-                            Mi experiencia incluye lenguajes como C#, JavaScript, Python y C++, así como 
-                            desarrollo web con HTML, CSS, Bootstrap y Laravel con bases de datos MySQL. 
-                            Busco oportunidades para seguir creciendo profesionalmente en el desarrollo de software.
-                        </p>
+                        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
+                            <a href="#contact" class="btn btn-primary-custom" 
+                               aria-label="Ir a la sección de contacto para comunicarse conmigo">
+                               Contáctame
+                            </a>
+                            <a href="#projects" class="btn btn-outline-custom" 
+                               aria-label="Ver mis proyectos de desarrollo de software">
+                               Ver Proyectos
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                        <img src="https://via.placeholder.com/400x500/667eea/ffffff?text=Jonnathan+Castillo" 
+                             alt="Fotografía profesional de Jonnathan Castillo, estudiante de Ingeniería en Software" 
+                             class="profile-img img-fluid"
+                             loading="lazy">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="section skills-section">
-        <div class="container">
-            <h2 class="section-title fade-in">Habilidades</h2>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="skill-item fade-in">
-                        <div class="skill-icon">
-                            <i class="fab fa-js-square"></i>
-                        </div>
-                        <h3 class="skill-title">JavaScript</h3>
-                        <p>Desarrollo con JavaScript para aplicaciones web interactivas y dinámicas.</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="75"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="skill-item fade-in">
-                        <div class="skill-icon">
-                            <i class="fab fa-microsoft"></i>
-                        </div>
-                        <h3 class="skill-title">C#</h3>
-                        <p>Programación orientada a objetos con C# para desarrollo de aplicaciones robustas.</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="80"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="skill-item fade-in">
-                        <div class="skill-icon">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <h3 class="skill-title">Python</h3>
-                        <p>Desarrollo de aplicaciones y scripts con Python para automatización y análisis.</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="70"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="skill-item fade-in">
-                        <div class="skill-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3 class="skill-title">C++</h3>
-                        <p>Programación en C++ para desarrollo de aplicaciones de alto rendimiento.</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="65"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="skill-item fade-in">
-                        <div class="skill-icon">
-                            <i class="fab fa-laravel"></i>
-                        </div>
-                        <h3 class="skill-title">Laravel & MySQL</h3>
-                        <p>Desarrollo web backend con Laravel y gestión de bases de datos MySQL.</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="78"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="skill-item fade-in">
-                        <div class="skill-icon">
-                            <i class="fab fa-html5"></i>
-                        </div>
-                        <h3 class="skill-title">Frontend Web</h3>
-                        <p>Desarrollo frontend con HTML, CSS y Bootstrap para interfaces responsivas.</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-width="85"></div>
+        <!-- About Section -->
+        <section id="about" class="section" aria-labelledby="about-title">
+            <div class="container">
+                <h2 id="about-title" class="section-title fade-in">Sobre Mí</h2>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center fade-in">
+                            <p class="lead mb-4">
+                                Soy <strong>Tecnólogo en Software</strong> y estudiante de <strong>Ingeniería en Software</strong> 
+                                (7mo semestre) con experiencia en soporte técnico, mantenimiento de sistemas y desarrollo de aplicaciones. 
+                                Mi formación incluye estudios en el <em>Instituto Tecnológico Superior Cordillera</em> y actualmente 
+                                en la <em>Universidad Internacional SEK</em>.
+                            </p>
+                            <p class="mb-4">
+                                He trabajado en el área de <strong>salud pública</strong> y <strong>gestión inmobiliaria</strong> 
+                                del sector público, donde he desarrollado habilidades en registro y control de datos, 
+                                gestión de expedientes, y soporte técnico especializado en sistemas y aplicaciones.
+                            </p>
+                            <p>
+                                Mi experiencia incluye lenguajes como <strong>C#, JavaScript, Python y C++</strong>, 
+                                así como desarrollo web con <strong>HTML, CSS, Bootstrap y Laravel</strong> 
+                                con bases de datos <strong>MySQL</strong>. Busco oportunidades para seguir 
+                                creciendo profesionalmente en el desarrollo de software.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title fade-in">Proyectos</h2>
-            <div class="row g-4 justify-content-center">
-                <div class="col-lg-6 col-md-8">
-                    <div class="project-card fade-in">
-                        <div class="project-image">
-                            <i class="fas fa-calculator"></i>
+        <!-- Skills Section -->
+        <section id="skills" class="section skills-section" aria-labelledby="skills-title">
+            <div class="container">
+                <h2 id="skills-title" class="section-title fade-in">Habilidades Técnicas</h2>
+                <div class="row g-4" role="list" aria-label="Lista de habilidades técnicas">
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="skill-item fade-in" tabindex="0" 
+                             aria-labelledby="skill-js-title" aria-describedby="skill-js-desc">
+                            <div class="skill-icon" aria-hidden="true">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <h3 id="skill-js-title" class="skill-title">JavaScript</h3>
+                            <p id="skill-js-desc">
+                                Desarrollo con JavaScript para aplicaciones web interactivas y dinámicas.
+                            </p>
+                            <div class="progress-bar" role="progressbar" aria-valuenow="75" 
+                                 aria-valuemin="0" aria-valuemax="100" aria-label="Nivel de JavaScript: 75%">
+                                <div class="progress-fill" data-width="75"></div>
+                            </div>
                         </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Control de Gastos - Familia Castillo</h3>
-                            <p>Aplicación móvil desarrollada para la gestión inteligente del dinero familiar. Permite administrar ingresos, gastos y balances de cada miembro de la familia con interfaz intuitiva y reportes detallados.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Android</span>
-                                <span class="tech-tag">Java</span>
-                                <span class="tech-tag">SQLite</span>
-                                <span class="tech-tag">Material Design</span>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="skill-item fade-in" tabindex="0" 
+                             aria-labelledby="skill-csharp-title" aria-describedby="skill-csharp-desc">
+                            <div class="skill-icon" aria-hidden="true">
+                                <i class="fab fa-microsoft"></i>
+                            </div>
+                            <h3 id="skill-csharp-title" class="skill-title">C#</h3>
+                            <p id="skill-csharp-desc">
+                                Programación orientada a objetos con C# para desarrollo de aplicaciones robustas.
+                            </p>
+                            <div class="progress-bar" role="progressbar" aria-valuenow="80" 
+                                 aria-valuemin="0" aria-valuemax="100" aria-label="Nivel de C#: 80%">
+                                <div class="progress-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="skill-item fade-in" tabindex="0" 
+                             aria-labelledby="skill-python-title" aria-describedby="skill-python-desc">
+                            <div class="skill-icon" aria-hidden="true">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h3 id="skill-python-title" class="skill-title">Python</h3>
+                            <p id="skill-python-desc">
+                                Desarrollo de aplicaciones y scripts con Python para automatización y análisis.
+                            </p>
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70" 
+                                 aria-valuemin="0" aria-valuemax="100" aria-label="Nivel de Python: 70%">
+                                <div class="progress-fill" data-width="70"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="skill-item fade-in" tabindex="0" 
+                             aria-labelledby="skill-cpp-title" aria-describedby="skill-cpp-desc">
+                            <div class="skill-icon" aria-hidden="true">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 id="skill-cpp-title" class="skill-title">C++</h3>
+                            <p id="skill-cpp-desc">
+                                Programación en C++ para desarrollo de aplicaciones de alto rendimiento.
+                            </p>
+                            <div class="progress-bar" role="progressbar" aria-valuenow="65" 
+                                 aria-valuemin="0" aria-valuemax="100" aria-label="Nivel de C++: 65%">
+                                <div class="progress-fill" data-width="65"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="skill-item fade-in" tabindex="0" 
+                             aria-labelledby="skill-laravel-title" aria-describedby="skill-laravel-desc">
+                            <div class="skill-icon" aria-hidden="true">
+                                <i class="fab fa-laravel"></i>
+                            </div>
+                            <h3 id="skill-laravel-title" class="skill-title">Laravel & MySQL</h3>
+                            <p id="skill-laravel-desc">
+                                Desarrollo web backend con Laravel y gestión de bases de datos MySQL.
+                            </p>
+                            <div class="progress-bar" role="progressbar" aria-valuenow="78" 
+                                 aria-valuemin="0" aria-valuemax="100" aria-label="Nivel de Laravel y MySQL: 78%">
+                                <div class="progress-fill" data-width="78"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="skill-item fade-in" tabindex="0" 
+                             aria-labelledby="skill-frontend-title" aria-describedby="skill-frontend-desc">
+                            <div class="skill-icon" aria-hidden="true">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <h3 id="skill-frontend-title" class="skill-title">Frontend Web</h3>
+                            <p id="skill-frontend-desc">
+                                Desarrollo frontend con HTML, CSS y Bootstrap para interfaces responsivas.
+                            </p>
+                            <div class="progress-bar" role="progressbar" aria-valuenow="85" 
+                                 aria-valuemin="0" aria-valuemax="100" aria-label="Nivel de Frontend Web: 85%">
+                                <div class="progress-fill" data-width="85"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <h2 class="section-title fade-in">Contacto</h2>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <h3 class="contact-title">Email</h3>
-                        <p class="contact-info">jonnathancastillochalan@gmail.com</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <h3 class="contact-title">Teléfono</h3>
-                        <p class="contact-info">+593 98 421 1439</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="contact-item fade-in">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <h3 class="contact-title">Ubicación</h3>
-                        <p class="contact-info">Calle Pio XII, Ecuador</p>
+        <!-- Projects Section -->
+        <section id="projects" class="section" aria-labelledby="projects-title">
+            <div class="container">
+                <h2 id="projects-title" class="section-title fade-in">Proyectos Destacados</h2>
+                <div class="row g-4 justify-content-center" role="list" aria-label="Lista de proyectos">
+                    <div class="col-lg-6 col-md-8" role="listitem">
+                        <article class="project-card fade-in" tabindex="0" 
+                                 aria-labelledby="project-1-title" aria-describedby="project-1-desc">
+                            <div class="project-image" aria-hidden="true">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3 id="project-1-title" class="project-title">
+                                    Control de Gastos - Familia Castillo
+                                </h3>
+                                <p id="project-1-desc">
+                                    Aplicación móvil desarrollada para la gestión inteligente del dinero familiar. 
+                                    Permite administrar ingresos, gastos y balances de cada miembro de la familia 
+                                    con interfaz intuitiva y reportes detallados.
+                                </p>
+                                <div class="project-tech" role="list" aria-label="Tecnologías utilizadas">
+                                    <span class="tech-tag" role="listitem">Android</span>
+                                    <span class="tech-tag" role="listitem">Java</span>
+                                    <span class="tech-tag" role="listitem">SQLite</span>
+                                    <span class="tech-tag" role="listitem">Material Design</span>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact-section" aria-labelledby="contact-title">
+            <div class="container">
+                <h2 id="contact-title" class="section-title fade-in">Información de Contacto</h2>
+                <div class="row g-4" role="list" aria-label="Métodos de contacto">
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="contact-item fade-in" tabindex="0" 
+                             aria-labelledby="contact-email-title" aria-describedby="contact-email-info">
+                            <div class="contact-icon" aria-hidden="true">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3 id="contact-email-title" class="contact-title">Correo Electrónico</h3>
+                            <p id="contact-email-info" class="contact-info">
+                                <a href="mailto:jonnathancastillochalan@gmail.com" 
+                                   aria-label="Enviar correo electrónico a Jonnathan Castillo">
+                                   jonnathancastillochalan@gmail.com
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="contact-item fade-in" tabindex="0" 
+                             aria-labelledby="contact-phone-title" aria-describedby="contact-phone-info">
+                            <div class="contact-icon" aria-hidden="true">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <h3 id="contact-phone-title" class="contact-title">Teléfono</h3>
+                            <p id="contact-phone-info" class="contact-info">
+                                <a href="tel:+593984211439" 
+                                   aria-label="Llamar a Jonnathan Castillo al +593 98 421 1439">
+                                   +593 98 421 1439
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6" role="listitem">
+                        <div class="contact-item fade-in" tabindex="0" 
+                             aria-labelledby="contact-location-title" aria-describedby="contact-location-info">
+                            <div class="contact-icon" aria-hidden="true">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3 id="contact-location-title" class="contact-title">Ubicación</h3>
+                            <p id="contact-location-info" class="contact-info">
+                                Calle Pio XII, Ecuador
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo" aria-labelledby="footer-title">
         <div class="container">
-            <div class="social-links">
-                <a href="#" class="social-link" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
+            <h2 id="footer-title" class="visually-hidden">Pie de página con enlaces sociales</h2>
+            <div class="social-links" role="list" aria-label="Enlaces a redes sociales">
+                <a href="https://linkedin.com/in/jonnathan-castillo" class="social-link" 
+                   role="listitem" aria-label="Visitar perfil de LinkedIn de Jonnathan Castillo">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    <span class="visually-hidden">LinkedIn</span>
                 </a>
-                <a href="#" class="social-link" title="GitHub">
-                    <i class="fab fa-github"></i>
+                <a href="https://github.com/jonnathan-castillo" class="social-link" 
+                   role="listitem" aria-label="Visitar perfil de GitHub de Jonnathan Castillo">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                    <span class="visually-hidden">GitHub</span>
                 </a>
-                <a href="#" class="social-link" title="Twitter">
-                    <i class="fab fa-twitter"></i>
+                <a href="https://twitter.com/jonnathan_dev" class="social-link" 
+                   role="listitem" aria-label="Visitar perfil de Twitter de Jonnathan Castillo">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                    <span class="visually-hidden">Twitter</span>
                 </a>
-                <a href="#" class="social-link" title="Instagram">
-                    <i class="fab fa-instagram"></i>
+                <a href="https://instagram.com/jonnathan.dev" class="social-link" 
+                   role="listitem" aria-label="Visitar perfil de Instagram de Jonnathan Castillo">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="visually-hidden">Instagram</span>
                 </a>
             </div>
             <div class="text-center">
@@ -263,6 +926,218 @@
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
+    
+    <!-- Eye Tracking Script -->
+    <script>
+        // Variables para Eye Tracking
+        let isEyeTracking = false;
+        let gazeData = [];
+        let dataCount = 0;
+        let heatmapInstance;
+
+        // Inicializar heatmap
+        function initHeatmap() {
+            heatmapInstance = h337.create({
+                container: document.getElementById('heatmapContainer'),
+                radius: 50,
+                maxOpacity: 0.8,
+                minOpacity: 0.1,
+                blur: 0.75,
+                gradient: {
+                    0.0: 'blue',
+                    0.2: 'cyan', 
+                    0.4: 'lime',
+                    0.6: 'yellow',
+                    0.8: 'orange',
+                    1.0: 'red'
+                }
+            });
+        }
+
+        // Funciones de Eye Tracking
+        document.getElementById('startEyeBtn').onclick = async () => {
+            gazeData = [];
+            dataCount = 0;
+            isEyeTracking = true;
+            
+            document.getElementById('startEyeBtn').disabled = true;
+            document.getElementById('stopEyeBtn').disabled = false;
+            document.getElementById('heatmapContainer').style.display = 'none';
+            document.getElementById('eyeStatus').textContent = 'Iniciando cámara...';
+
+            try {
+                await webgazer.setRegression('ridge')
+                    .setGazeListener((data, time) => {
+                        if (data && isEyeTracking) {
+                            const w = window.innerWidth;
+                            const h = window.innerHeight;
+
+                            if (data.x >= 0 && data.x <= w && data.y >= 0 && data.y <= h) {
+                                dataCount++;
+                                gazeData.push({ 
+                                    x: Math.round(data.x), 
+                                    y: Math.round(data.y), 
+                                    value: 1 
+                                });
+                                
+                                document.getElementById('eyeStatus').textContent = `Capturando: ${dataCount} puntos`;
+                            }
+                        }
+                    })
+                    .begin();
+
+                webgazer.showVideo(false)
+                    .showFaceOverlay(false)
+                    .showFaceFeedbackBox(false)
+                    .showPredictionPoints(true);
+                    
+                setTimeout(() => {
+                    document.getElementById('eyeStatus').textContent = `Seguimiento activo: ${dataCount} puntos`;
+                }, 2000);
+            } catch (error) {
+                console.error('Error iniciando WebGazer:', error);
+                document.getElementById('eyeStatus').textContent = 'Error al iniciar cámara';
+                document.getElementById('startEyeBtn').disabled = false;
+                document.getElementById('stopEyeBtn').disabled = true;
+            }
+        };
+
+        document.getElementById('stopEyeBtn').onclick = () => {
+            isEyeTracking = false;
+            document.getElementById('stopEyeBtn').disabled = true;
+            document.getElementById('startEyeBtn').disabled = false;
+            document.getElementById('eyeStatus').textContent = 'Generando mapa de calor...';
+
+            webgazer.pause();
+
+            setTimeout(() => {
+                if (gazeData.length > 0) {
+                    // Procesar datos para mejor visualización
+                    const processedData = [];
+                    const groupedData = {};
+                    
+                    // Agrupar puntos cercanos
+                    gazeData.forEach(point => {
+                        const key = `${Math.floor(point.x/20)}-${Math.floor(point.y/20)}`;
+                        if (!groupedData[key]) {
+                            groupedData[key] = { x: point.x, y: point.y, value: 0 };
+                        }
+                        groupedData[key].value += 1;
+                    });
+                    
+                    // Convertir a array
+                    Object.values(groupedData).forEach(point => {
+                        processedData.push(point);
+                    });
+
+                    document.getElementById('heatmapContainer').style.display = 'block';
+                    
+                    if (!heatmapInstance) {
+                        initHeatmap();
+                    }
+                    
+                    heatmapInstance.setData({
+                        max: Math.max(...processedData.map(p => p.value)),
+                        data: processedData
+                    });
+                    
+                    document.getElementById('eyeStatus').textContent = `Mapa generado: ${gazeData.length} puntos`;
+                    console.log("Mapa de calor generado con", gazeData.length, "puntos.");
+                } else {
+                    alert("No se capturaron puntos válidos.");
+                    document.getElementById('eyeStatus').textContent = "No hay datos para mostrar";
+                    console.warn("No se recolectaron datos dentro del área visible.");
+                }
+            }, 500);
+        };
+
+        // Inicializar heatmap al cargar
+        window.addEventListener('load', () => {
+            initHeatmap();
+        });
+
+        // Funciones de accesibilidad
+        function changeFontSize(size) {
+            document.body.classList.remove('font-small', 'font-large');
+            if (size !== 'normal') {
+                document.body.classList.add('font-' + size);
+            }
+            announceToScreenReader(`Tamaño de fuente cambiado a ${size === 'normal' ? 'normal' : size === 'small' ? 'pequeño' : 'grande'}`);
+        }
+
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            const isActive = document.body.classList.contains('high-contrast');
+            announceToScreenReader(`Modo alto contraste ${isActive ? 'activado' : 'desactivado'}`);
+        }
+
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'visually-hidden';
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        // Smooth scrolling para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animaciones al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    
+                    // Animar barras de progreso
+                    const progressBars = entry.target.querySelectorAll('.progress-fill');
+                    progressBars.forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        setTimeout(() => {
+                            bar.style.width = width + '%';
+                        }, 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos con animación
+        document.querySelectorAll('.fade-in, .skill-item, .project-card, .contact-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease-out';
+            observer.observe(el);
+        });
+
+        // Navbar transparente al hacer scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('mainNavbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(102, 126, 234, 0.95)';
+            } else {
+                navbar.style.backgroundColor = 'transparent';
+            }
+        });
+    </script>
 </body>
 </html>
