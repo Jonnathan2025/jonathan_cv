@@ -2,7 +2,7 @@
 🔗 https://github.com/Jonnathan2025/jonathan_cv.git
 🌐 https://jonnathan2025.github.io/jonathan_cv/
 # Currículum Digital - Jonnathan Castillo
-# Portafolio Digital Accesible con Eye Tracking
+Portafolio Digital Accesible con Eye Tracking
 # Descripción del Proyecto
 Este es un portafolio web personal de Jonnathan Castillo que integra tecnologías de eye tracking (seguimiento ocular) para generar mapas de calor basados en la atención visual de los usuarios. El proyecto combina diseño accesible, usabilidad moderna y análisis de comportamiento visual para crear una experiencia web innovadora.
 
