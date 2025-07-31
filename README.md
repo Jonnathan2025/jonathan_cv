@@ -11,7 +11,7 @@ Generación de mapas de calor que muestran las zonas más observadas
 Diseño completamente accesible siguiendo pautas WCAG 2.1
 Controles de accesibilidad (tamaño de fuente, alto contraste)
 Diseño responsivo compatible con dispositivos móviles
-#🚀 Cómo Ejecutar el Proyecto
+🚀 #Cómo Ejecutar el Proyecto
 Prerrequisitos
 
 Navegador web moderno (Chrome, Firefox, Safari, Edge)
