@@ -59,7 +59,16 @@ El mapa de calor se despliega en la parte superior de la pagina:
 # Captura de pantalla
 <img width="1915" height="897" alt="image" src="https://github.com/user-attachments/assets/4b5c8903-df48-4ba3-88c7-409aa6265872" />
 <img width="1916" height="907" alt="image" src="https://github.com/user-attachments/assets/0eb3739e-ce59-4718-81e4-a9d71924d8fe" />
+<img width="788" height="377" alt="image" src="https://github.com/user-attachments/assets/2ee43181-4642-4247-9b66-c8abafb0826a" />
 
+✅ WebGazer.js para captura de mirada - Implementado correctamente con configuración de regresión ridge
+✅ Heatmap.js para mapas de calor - Integrado con gradientes personalizados y visualización profesional
+✅ Registro de posición durante navegación - Sistema de captura en tiempo real con contador de puntos
+✅ Botón para detener seguimiento - Control "Ver Mapa de Calor" que pausa y procesa datos
+✅ Mostrar mapa al detener - Despliega automáticamente como overlay con datos agrupados y filtrados
+✅ Botones de tamaño de fuente (A-, A, A+)
+✅ Botón de alto contraste (icono de ajuste)
+✅ Foco visible en navegación por teclado
 
 ## 🛠️ Tecnologías usadas
 - HTML5
