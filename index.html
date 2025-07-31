@@ -120,6 +120,11 @@
             color: white;
         }
 
+        .eye-tracking-btn.clear {
+            background: #6c757d;
+            color: white;
+        }
+
         .eye-tracking-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
@@ -134,16 +139,21 @@
             border-radius: 3px;
         }
 
-        /* HEATMAP CONTAINER */
+        /* HEATMAP CONTAINER - CORREGIDO */
         #heatmapContainer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            display: none;
-            z-index: 1000;
+            z-index: 999;
             pointer-events: none;
+            background: rgba(0,0,0,0.3);
+            display: none;
+        }
+
+        #heatmapContainer.active {
+            display: block !important;
         }
 
         /* Skip link para accesibilidad */
@@ -561,6 +571,9 @@
         <button class="eye-tracking-btn stop" id="stopEyeBtn" disabled>
             ⏹️ Ver Mapa de Calor
         </button>
+           <button class="eye-tracking-btn clear" id="clearEyeBtn" disabled>
+            🧹 Limpiar Mapa
+        </button>
         <div class="eye-tracking-status" id="eyeStatus">
             Listo para iniciar
         </div>
@@ -656,7 +669,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 text-center mt-5 mt-lg-0">
-                        <img src="https://via.placeholder.com/400x500/667eea/ffffff?text=Jonnathan+Castillo" 
+                        <img src="images/img.jpg" 
                              alt="Fotografía profesional de Jonnathan Castillo, estudiante de Ingeniería en Software" 
                              class="profile-img img-fluid"
                              loading="lazy">
@@ -927,7 +940,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Eye Tracking Script -->
+    <!-- Eye Tracking Script CORREGIDO -->
     <script>
         // Variables para Eye Tracking
         let isEyeTracking = false;
@@ -935,34 +948,46 @@
         let dataCount = 0;
         let heatmapInstance;
 
-        // Inicializar heatmap
+        // Inicializar heatmap CORRECTAMENTE
         function initHeatmap() {
+            const container = document.getElementById('heatmapContainer');
+            
+            // Limpiar cualquier instancia previa
+            container.innerHTML = '';
+            
             heatmapInstance = h337.create({
-                container: document.getElementById('heatmapContainer'),
-                radius: 50,
+                container: container,
+                radius: 60,
                 maxOpacity: 0.8,
-                minOpacity: 0.1,
-                blur: 0.75,
+                minOpacity: 0.2,
+                blur: 0.85,
                 gradient: {
-                    0.0: 'blue',
-                    0.2: 'cyan', 
-                    0.4: 'lime',
-                    0.6: 'yellow',
-                    0.8: 'orange',
-                    1.0: 'red'
+                    0.0: 'rgba(0, 0, 255, 0)',
+                    0.1: 'rgba(0, 0, 255, 0.8)',
+                    0.2: 'rgba(0, 255, 255, 0.8)', 
+                    0.4: 'rgba(0, 255, 0, 0.8)',
+                    0.6: 'rgba(255, 255, 0, 0.8)',
+                    0.8: 'rgba(255, 165, 0, 0.8)',
+                    1.0: 'rgba(255, 0, 0, 0.8)'
                 }
             });
+            
+            console.log('Heatmap inicializado correctamente');
         }
 
-        // Funciones de Eye Tracking
+        // Funciones de Eye Tracking CORREGIDAS
         document.getElementById('startEyeBtn').onclick = async () => {
             gazeData = [];
             dataCount = 0;
             isEyeTracking = true;
             
+            // Ocultar mapa de calor
+            const heatmapContainer = document.getElementById('heatmapContainer');
+            heatmapContainer.classList.remove('active');
+            
             document.getElementById('startEyeBtn').disabled = true;
             document.getElementById('stopEyeBtn').disabled = false;
-            document.getElementById('heatmapContainer').style.display = 'none';
+            document.getElementById('clearEyeBtn').disabled = true;
             document.getElementById('eyeStatus').textContent = 'Iniciando cámara...';
 
             try {
@@ -972,6 +997,7 @@
                             const w = window.innerWidth;
                             const h = window.innerHeight;
 
+                            // Validar que el punto esté dentro de la pantalla
                             if (data.x >= 0 && data.x <= w && data.y >= 0 && data.y <= h) {
                                 dataCount++;
                                 gazeData.push({ 
@@ -980,25 +1006,31 @@
                                     value: 1 
                                 });
                                 
-                                document.getElementById('eyeStatus').textContent = `Capturando: ${dataCount} puntos`;
+                                // Actualizar estado cada 10 puntos para mejor rendimiento
+                                if (dataCount % 10 === 0) {
+                                    document.getElementById('eyeStatus').textContent = `Capturando: ${dataCount} puntos`;
+                                }
                             }
                         }
                     })
                     .begin();
 
+                // Configurar WebGazer
                 webgazer.showVideo(false)
                     .showFaceOverlay(false)
                     .showFaceFeedbackBox(false)
-                    .showPredictionPoints(true);
+                    .showPredictionPoints(false); // Ocultar puntos durante captura
                     
                 setTimeout(() => {
-                    document.getElementById('eyeStatus').textContent = `Seguimiento activo: ${dataCount} puntos`;
-                }, 2000);
+                    if (isEyeTracking) {
+                        document.getElementById('eyeStatus').textContent = `Seguimiento activo: ${dataCount} puntos`;
+                    }
+                }, 3000);
+                
             } catch (error) {
                 console.error('Error iniciando WebGazer:', error);
+                resetEyeTrackingButtons();
                 document.getElementById('eyeStatus').textContent = 'Error al iniciar cámara';
-                document.getElementById('startEyeBtn').disabled = false;
-                document.getElementById('stopEyeBtn').disabled = true;
             }
         };
 
@@ -1006,54 +1038,121 @@
             isEyeTracking = false;
             document.getElementById('stopEyeBtn').disabled = true;
             document.getElementById('startEyeBtn').disabled = false;
-            document.getElementById('eyeStatus').textContent = 'Generando mapa de calor...';
+            document.getElementById('clearEyeBtn').disabled = false;
+            document.getElementById('eyeStatus').textContent = 'Procesando datos...';
 
+            // Pausar WebGazer
             webgazer.pause();
 
             setTimeout(() => {
-                if (gazeData.length > 0) {
-                    // Procesar datos para mejor visualización
-                    const processedData = [];
-                    const groupedData = {};
-                    
-                    // Agrupar puntos cercanos
-                    gazeData.forEach(point => {
-                        const key = `${Math.floor(point.x/20)}-${Math.floor(point.y/20)}`;
-                        if (!groupedData[key]) {
-                            groupedData[key] = { x: point.x, y: point.y, value: 0 };
-                        }
-                        groupedData[key].value += 1;
-                    });
-                    
-                    // Convertir a array
-                    Object.values(groupedData).forEach(point => {
-                        processedData.push(point);
-                    });
+                generateHeatmap();
+            }, 500);
+        };
 
-                    document.getElementById('heatmapContainer').style.display = 'block';
+        document.getElementById('clearEyeBtn').onclick = () => {
+            // Limpiar mapa
+            const heatmapContainer = document.getElementById('heatmapContainer');
+            heatmapContainer.classList.remove('active');
+            
+            if (heatmapInstance) {
+                heatmapInstance.setData({ max: 0, data: [] });
+            }
+            
+            gazeData = [];
+            dataCount = 0;
+            document.getElementById('clearEyeBtn').disabled = true;
+            document.getElementById('eyeStatus').textContent = 'Mapa limpiado';
+            
+            console.log('Mapa de calor limpiado');
+        };
+
+        function generateHeatmap() {
+            if (gazeData.length > 0) {
+                console.log(`Generando mapa con ${gazeData.length} puntos`);
+                
+                // Procesar datos para mejor visualización
+                const processedData = [];
+                const groupedData = {};
+                const gridSize = 30; // Tamaño de celda para agrupar puntos cercanos
+                
+                // Agrupar puntos cercanos para reducir ruido
+                gazeData.forEach(point => {
+                    const gridX = Math.floor(point.x / gridSize) * gridSize;
+                    const gridY = Math.floor(point.y / gridSize) * gridSize;
+                    const key = `${gridX}-${gridY}`;
                     
+                    if (!groupedData[key]) {
+                        groupedData[key] = { 
+                            x: gridX + gridSize/2, 
+                            y: gridY + gridSize/2, 
+                            value: 0 
+                        };
+                    }
+                    groupedData[key].value += 1;
+                });
+                
+                // Convertir a array y filtrar puntos con pocos datos
+                Object.values(groupedData).forEach(point => {
+                    if (point.value >= 2) { // Solo puntos con al menos 2 miradas
+                        processedData.push(point);
+                    }
+                });
+
+                if (processedData.length > 0) {
+                    // Mostrar el contenedor del mapa
+                    const heatmapContainer = document.getElementById('heatmapContainer');
+                    heatmapContainer.classList.add('active');
+                    
+                    // Inicializar si no existe
                     if (!heatmapInstance) {
                         initHeatmap();
                     }
                     
+                    // Establecer datos del mapa
+                    const maxValue = Math.max(...processedData.map(p => p.value));
                     heatmapInstance.setData({
-                        max: Math.max(...processedData.map(p => p.value)),
+                        max: maxValue,
                         data: processedData
                     });
                     
-                    document.getElementById('eyeStatus').textContent = `Mapa generado: ${gazeData.length} puntos`;
-                    console.log("Mapa de calor generado con", gazeData.length, "puntos.");
+                    document.getElementById('eyeStatus').textContent = 
+                        `Mapa generado: ${gazeData.length} puntos capturados, ${processedData.length} regiones`;
+                    
+                    console.log(`Mapa de calor generado exitosamente:`, {
+                        puntosOriginales: gazeData.length,
+                        puntosAgrupados: processedData.length,
+                        valorMaximo: maxValue
+                    });
                 } else {
-                    alert("No se capturaron puntos válidos.");
-                    document.getElementById('eyeStatus').textContent = "No hay datos para mostrar";
-                    console.warn("No se recolectaron datos dentro del área visible.");
+                    document.getElementById('eyeStatus').textContent = 'Datos insuficientes para generar mapa';
+                    console.warn('No hay suficientes datos agrupados para mostrar');
                 }
-            }, 500);
-        };
+            } else {
+                document.getElementById('eyeStatus').textContent = 'No se capturaron datos válidos';
+                console.warn('No se recolectaron datos de mirada válidos');
+            }
+        }
 
-        // Inicializar heatmap al cargar
+        function resetEyeTrackingButtons() {
+            document.getElementById('startEyeBtn').disabled = false;
+            document.getElementById('stopEyeBtn').disabled = true;
+            document.getElementById('clearEyeBtn').disabled = true;
+            isEyeTracking = false;
+        }
+
+        // Inicializar cuando la página esté completamente cargada
         window.addEventListener('load', () => {
+            console.log('Página cargada, inicializando heatmap...');
             initHeatmap();
+        });
+
+        // Limpiar al redimensionar ventana
+        window.addEventListener('resize', () => {
+            if (heatmapInstance) {
+                setTimeout(() => {
+                    initHeatmap();
+                }, 100);
+            }
         });
 
         // Funciones de accesibilidad
