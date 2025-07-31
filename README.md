@@ -1,16 +1,16 @@
 # Currículum Digital - Jonnathan Castillo
 
-## 💼 Descripción
-Este proyecto es una versión digital de mi currículum, desarrollada con HTML5, CSS3 y Bootstrap, basada en un diseño original hecho en Figma.
+👁️ Portafolio Digital Accesible con Eye Tracking
+📋 Descripción del Proyecto
+Este es un portafolio web personal de Jonnathan Castillo que integra tecnologías de eye tracking (seguimiento ocular) para generar mapas de calor basados en la atención visual de los usuarios. El proyecto combina diseño accesible, usabilidad moderna y análisis de comportamiento visual para crear una experiencia web innovadora.
+✨ Características Principales
 
-## 🎨 Enlace a Figma
-https://www.figma.com/design/uGjZoSrhoSvWHCEUrhlyiG/Laboratorio-7-Jonnathan-Castillo?node-id=0-1&t=UZkPjbAsSbGqcju8-1
-
-## 🚀 Enlaces del proyecto
-
-- 🔗 https://github.com/Jonnathan2025/jonathan_cv.git
-- 🌐 https://jonnathan2025.github.io/jonathan_cv/
-
+Portafolio profesional con información personal, habilidades técnicas y proyectos
+Sistema de eye tracking en tiempo real usando la cámara web
+Generación de mapas de calor que muestran las zonas más observadas
+Diseño completamente accesible siguiendo pautas WCAG 2.1
+Controles de accesibilidad (tamaño de fuente, alto contraste)
+Diseño responsivo compatible con dispositivos móviles
 ## 🛠️ Tecnologías usadas
 - HTML5
 - CSS3
