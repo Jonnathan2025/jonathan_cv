@@ -55,7 +55,7 @@ Oculta el mapa de calor actual
 Reinicia los datos para una nueva sesión
 
 #📊 Ubicación del Mapa de Calor
-El mapa de calor se despliega como una capa superpuesta que cubre toda la página web. Esta implementación permite:
+El mapa de calor se despliega en la parte superior de la pagina:
 # Captura de pantalla
 <img width="1915" height="897" alt="image" src="https://github.com/user-attachments/assets/4b5c8903-df48-4ba3-88c7-409aa6265872" />
 <img width="1916" height="907" alt="image" src="https://github.com/user-attachments/assets/0eb3739e-ce59-4718-81e4-a9d71924d8fe" />
