@@ -1,3 +1,6 @@
+## 🚀 Enlaces del proyecto
+🔗 https://github.com/Jonnathan2025/jonathan_cv2.git
+🌐 https://jonnathan2025.github.io/jonathan_cv2/
 # Currículum Digital - Jonnathan Castillo
 
 👁️ Portafolio Digital Accesible con Eye Tracking
