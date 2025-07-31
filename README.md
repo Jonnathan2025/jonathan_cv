@@ -60,6 +60,8 @@ El mapa de calor se despliega en la parte superior de la pagina:
 <img width="1915" height="897" alt="image" src="https://github.com/user-attachments/assets/4b5c8903-df48-4ba3-88c7-409aa6265872" />
 <img width="1916" height="907" alt="image" src="https://github.com/user-attachments/assets/0eb3739e-ce59-4718-81e4-a9d71924d8fe" />
 <img width="788" height="377" alt="image" src="https://github.com/user-attachments/assets/2ee43181-4642-4247-9b66-c8abafb0826a" />
+<img width="1856" height="896" alt="image" src="https://github.com/user-attachments/assets/91702b76-f23f-4ac0-84c7-c57581ea4ef9" />
+
 
 ✅ WebGazer.js para captura de mirada - 
 ✅ Heatmap.js para mapas de calor - 
