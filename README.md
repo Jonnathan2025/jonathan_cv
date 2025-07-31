@@ -3,7 +3,7 @@
 👁️ Portafolio Digital Accesible con Eye Tracking
 📋 Descripción del Proyecto
 Este es un portafolio web personal de Jonnathan Castillo que integra tecnologías de eye tracking (seguimiento ocular) para generar mapas de calor basados en la atención visual de los usuarios. El proyecto combina diseño accesible, usabilidad moderna y análisis de comportamiento visual para crear una experiencia web innovadora.
-#✨Características Principales
+✨ # Características Principales
 
 Portafolio profesional con información personal, habilidades técnicas y proyectos
 Sistema de eye tracking en tiempo real usando la cámara web
