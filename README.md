@@ -56,6 +56,8 @@ Reinicia los datos para una nueva sesión
 
 #📊 Ubicación del Mapa de Calor
 El mapa de calor se despliega como una capa superpuesta que cubre toda la página web. Esta implementación permite:
+# Captura de pantalla
+
 ## 🛠️ Tecnologías usadas
 - HTML5
 - CSS3
